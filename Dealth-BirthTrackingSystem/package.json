@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/material": "^6.1.1",
     "axios": "^1.7.7",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
@@ -33,5 +37,4 @@
     "vite": "^5.4.1"
   },
   "proxy": "http://127.0.0.1:8000"
-
 }
