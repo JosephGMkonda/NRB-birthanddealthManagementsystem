@@ -3,10 +3,9 @@ import Sidebar from './components/Sidebar'
 import Dashboard from './components/DashBoard/Dashboard'
 import {BrowserRouter,Navigate,Outlet, Routes, Route} from 'react-router-dom'
 import SignIn from './components/SignIn/SignIn'
-import AuthLayout from './components/SignIn/AuthLayout'
-import RootLayout from './components/pages/RootLayout/RootLayout'
+
 import { PrivateRoute } from './components/PrivateRoute'
-import Home from './components/pages/Home/Home'
+import Home from './pages/Home'
 
 
 const Logout = () => {
