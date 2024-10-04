@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
 import { Box,Typography } from '@mui/material'
-const DealthCerficate = () => {
+const Dashboard = () => {
   return (
     <>
     <Box sx={{display:'flex'}}>
@@ -10,7 +10,7 @@ const DealthCerficate = () => {
       <Box component="main" sx={{ flexGrow:1, p:3, marginTop:"65px"}}>
 
         <Typography variant='h4'>
-               DealthCertificate
+               Dashboard
           </Typography>
 
       </Box>
@@ -19,4 +19,4 @@ const DealthCerficate = () => {
   )
 }
 
-export default DealthCerficate
+export default Dashboard

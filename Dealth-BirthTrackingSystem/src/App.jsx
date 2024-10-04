@@ -1,11 +1,17 @@
 import React from 'react'
 import Sidebar from './components/Sidebar'
-import Dashboard from './components/DashBoard/Dashboard'
+
 import {BrowserRouter,Navigate,Outlet, Routes, Route} from 'react-router-dom'
 import SignIn from './components/SignIn/SignIn'
 
 import { PrivateRoute } from './components/PrivateRoute'
-import Home from './pages/Home'
+
+import Dashboard from './pages/Dashboard'
+import DealthCertificate from './pages/DealthCerficate'
+import BirthCertificate from './pages/BirthCerticificate'
+import Report from './pages/Report'
+
+
 
 
 const Logout = () => {
@@ -22,14 +28,11 @@ const App = () => {
       <BrowserRouter>
       <Routes>
 
-        <Route 
-        path='/'
-        element = {
-          <PrivateRoute>
-              <Home/>
-          </PrivateRoute>
-        }
-        />
+        <Route path='/'element = { <PrivateRoute> <Dashboard/></PrivateRoute>}/>
+        <Route path='/Birth' element ={<PrivateRoute> <BirthCertificate/> </PrivateRoute>}/>
+        <Route path='/death' element={<PrivateRoute><DealthCertificate/></PrivateRoute>}/>
+        <Route path='/Report' element={<PrivateRoute><Report/></PrivateRoute>}/>
+        
 
         <Route path="/login" element={<SignIn/>}/>
       </Routes>
