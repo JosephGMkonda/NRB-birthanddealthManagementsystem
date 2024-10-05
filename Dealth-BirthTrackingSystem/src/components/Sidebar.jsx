@@ -26,13 +26,6 @@ const drawerWidth = 240;
 
 
 
-//Logout Function 
-
-const Logout = () => {
-  localStorage.clear();
-  return <Navigate to="/login"/>
-}
-
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -118,6 +111,16 @@ export default function Sidebar() {
 
 
   const navigate = useNavigate()
+
+
+  //Logout Function 
+
+const Logout = () => {
+  localStorage.clear();
+  navigate("/login"); 
+}
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
