@@ -1,6 +1,8 @@
 import React,{useState}  from 'react'
 import Sidebar from '../components/Sidebar'
 import { Box,Typography } from '@mui/material'
+
+
 const DealthCerficate = () => {
 
    // State for modal visibility

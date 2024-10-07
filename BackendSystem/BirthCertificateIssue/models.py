@@ -5,6 +5,7 @@ from django.conf import settings
 
 class BirthCertificateModel(models.Model):
     FullName = models.CharField(max_length=100)
+    Gender = models.CharField(max_length=20)
     BenNumber = models.CharField(max_length=100)
     CollectedBy = models.CharField(max_length=100)
     idNumberCollector = models.CharField(max_length=8)
