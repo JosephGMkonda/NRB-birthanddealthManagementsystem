@@ -5,9 +5,13 @@ import api from '../api'
 
 
 const BirthCertificate = () => {
-//state of modal visibility
+//state valiables
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [birthCertificate, setBirthCertificate] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searChQuery, setSearChQuery] = useState('');
+
 
     //State of the form Data
     const [formData, setFormData] = useState ({
@@ -21,22 +25,33 @@ const BirthCertificate = () => {
 
 
     // Fetching data
+    const fetchData = async (page=1, search='') => {
+      const response = await api.get('api/birthcertificate/',{
+        params:{
+          page:page,
+          search:search
+        }
+      });
 
+      console.log("Getting data response", response);
+      const data = await response.data;
+
+      console.log("Show data here: ", data);
+      setBirthCertificate(data)
+      setTotalPages(data.totalPages)
+      setCurrentPage(data.currentPage)
+    }
+
+    //searching amount Effect when data is fetched
     useEffect(() => {
 
-      const fetchData = async () => {
-        const response = await api.get('api/birthcertificate/');
+    fetchData(currentPage, searChQuery);
 
-        console.log("Getting data response", response);
-        const data = await response.data;
 
-        console.log("Show data here: ", data);
-        setBirthCertificate(data)
-      }
+    },[currentPage, searChQuery])
 
-      fetchData();
-
-    },[])
+    
+    
 
 
     //Form submit handler
@@ -124,7 +139,14 @@ const BirthCertificate = () => {
                 >Add</button>
             </div>
             <div class="w-full max-w-sm">
-                <input type="text" placeholder="Search..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                <input type="text" 
+                placeholder="Search..." 
+                class="w-full px-4 py-2 border 
+                rounded-md focus:outline-none 
+                focus:ring-2 focus:ring-blue-500"
+                value={searChQuery}
+                onChange={(e) => setSearChQuery(e.target.value)}
+                />
             </div>
         </div>
 
@@ -162,6 +184,27 @@ const BirthCertificate = () => {
                     
                 </tbody>
             </table>
+        </div>
+
+        <div className="flex justify-between mb-4">
+          <button className='px-4 py-2 bg-gray-300 rounded'
+           disabled={currentPage === 1}
+           onClick={() => setCurrentPage(prev => Math.max(prev -1, 1))}
+          
+          >
+            previous
+           
+            </button>
+
+            <span>Page {currentPage} of {totalPages}</span>
+
+            <button className="px-4 py-2 bg-gray-300 rounded"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(prev => Math.max(prev + 1, totalPages))}
+
+            >
+            Next
+            </button>
         </div>
 
 

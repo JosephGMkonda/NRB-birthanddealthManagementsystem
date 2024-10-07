@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.core.paginator import Paginator
+from django.db.models import Q
 from rest_framework import status
 from .serializer import BirthCertificateModelSerializer
 from .models import BirthCertificateModel
@@ -12,8 +14,28 @@ from .models import BirthCertificateModel
 def BirthCertificateList(request):
     if request.method == 'GET':
         BirthCertificate = BirthCertificateModel.objects.filter(user=request.user)
-        serializer = BirthCertificateModelSerializer(BirthCertificate, many=True)
-        return Response(serializer.data)
+
+        # Handle Search Functionality
+        search_query = request.GET.get('search','')
+        if search_query:
+            BirthCertificate = BirthCertificate.filter(
+             Q(FullName__icontains=search_query) | Q(BenNumber__icontains=search_query)
+            )
+
+        # settingup pagenation
+        paginator = Paginator(BirthCertificate,10)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
+        serializer = BirthCertificateModelSerializer(page_obj, many=True)
+
+        data = {
+            'total_records': paginator.count,
+            'total_pages' : paginator.num_pages,
+            'current_pages' : page_obj.number,
+            'records' : serializer.data
+        }
+        return Response(data)
     
     elif request.method == 'POST':
         serializer = BirthCertificateModelSerializer(data=request.data, context={'request': request})
