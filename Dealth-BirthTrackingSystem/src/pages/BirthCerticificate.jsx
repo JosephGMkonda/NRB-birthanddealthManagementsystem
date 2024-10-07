@@ -8,8 +8,8 @@ const BirthCertificate = () => {
 //state valiables
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [birthCertificate, setBirthCertificate] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [current_pages, setCurrentPage] = useState(1);
+  const [total_pages, setTotalPages] = useState(1);
   const [searChQuery, setSearChQuery] = useState('');
 
 
@@ -25,7 +25,12 @@ const BirthCertificate = () => {
 
 
     // Fetching data
+
+  
     const fetchData = async (page=1, search='') => {
+
+      try{
+
       const response = await api.get('api/birthcertificate/',{
         params:{
           page:page,
@@ -37,18 +42,29 @@ const BirthCertificate = () => {
       const data = await response.data;
 
       console.log("Show data here: ", data);
-      setBirthCertificate(data)
-      setTotalPages(data.totalPages)
-      setCurrentPage(data.currentPage)
+      if(data && data.records && Array.isArray(data.records)){
+      setBirthCertificate(data.records);
+      setTotalPages(data.total_pages);
+      setCurrentPage(data.current_pages);
+
+
+    }else{
+      setBirthCertificate([]);
     }
+
+    }catch(error){
+      console.error("Fetch data error : ", error)
+      setBirthCertificate([]);
+    }
+  }
 
     //searching amount Effect when data is fetched
     useEffect(() => {
 
-    fetchData(currentPage, searChQuery);
+    fetchData(current_pages, searChQuery);
 
 
-    },[currentPage, searChQuery])
+    },[current_pages, searChQuery])
 
     
     
@@ -166,7 +182,8 @@ const BirthCertificate = () => {
                 </thead>
 
                 <tbody class="text-gray-600 text-sm font-light">
-                  {birthCertificate.map((certificate) => (
+                  {Array.isArray(birthCertificate) && birthCertificate.length > 0 ? (
+                  birthCertificate.map((certificate) => (
                     <tr class="border-b border-gray-300 hover:bg-gray-100">
                         <td class="py-3 px-6 text-left whitespace-nowrap">{certificate.FullName}</td>
                         <td class="py-3 px-6 text-left">{certificate.Gender}</td>
@@ -180,15 +197,22 @@ const BirthCertificate = () => {
                         </td>
                     </tr>
 
-                     ))}
+                     ))
+                    ): (
+                      <tr>
+                      <td colSpan="5" className="py-3 px-6 text-center">No Birth Certificates found</td>
+                    </tr>
+                    )}
+
+                    
                     
                 </tbody>
             </table>
         </div>
 
         <div className="flex justify-between mb-4">
-          <button className='px-4 py-2 bg-gray-300 rounded'
-           disabled={currentPage === 1}
+          <button className='px-4 py-3 bg-gray-300 rounded'
+           disabled={current_pages === 1}
            onClick={() => setCurrentPage(prev => Math.max(prev -1, 1))}
           
           >
@@ -196,11 +220,11 @@ const BirthCertificate = () => {
            
             </button>
 
-            <span>Page {currentPage} of {totalPages}</span>
+            <span>Page {current_pages} of {total_pages}</span>
 
             <button className="px-4 py-2 bg-gray-300 rounded"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(prev => Math.max(prev + 1, totalPages))}
+            disabled={current_pages === total_pages}
+            onClick={() => setCurrentPage(prev => Math.max(prev + 1, total_pages))}
 
             >
             Next

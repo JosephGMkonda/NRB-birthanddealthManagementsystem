@@ -23,7 +23,7 @@ def BirthCertificateList(request):
             )
 
         # settingup pagenation
-        paginator = Paginator(BirthCertificate,10)
+        paginator = Paginator(BirthCertificate,5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
