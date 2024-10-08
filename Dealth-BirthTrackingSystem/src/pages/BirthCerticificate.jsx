@@ -7,6 +7,7 @@ import api from '../api'
 const BirthCertificate = () => {
 //state valiables
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ismodalView, setIsModalView] = useState(false);
   const [birthCertificate, setBirthCertificate] = useState([]);
   const [current_pages, setCurrentPage] = useState(1);
   const [total_pages, setTotalPages] = useState(1);
@@ -192,7 +193,12 @@ const BirthCertificate = () => {
 
                         
                         <td class="py-3 px-6 text-center">
-                            <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700">view</button>
+                            <button 
+                            class="bg-green-500 
+                            text-white px-3 py-1 
+                            rounded hover:bg-green-700"
+                            onClick={() => setIsModalView(open)}
+                            >view</button>
                             
                         </td>
                     </tr>
@@ -344,6 +350,22 @@ const BirthCertificate = () => {
   </form>
 </div>
 </div>
+
+     )}
+
+
+     {/* View Details Modal */}
+     { ismodalView && (
+
+      <div className=" fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white, p-6, rounded-lg, w-96">
+          <h2 className="text-xl mb-4"> View Details</h2>
+          <div className="mb-4">
+            <div cl>
+            </div>
+            </div>
+          </div>
+        </div>
 
      )}
 
