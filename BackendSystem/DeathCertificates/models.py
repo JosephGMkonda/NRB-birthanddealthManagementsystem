@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 
-class BirthCertificatesModel(models.Model):
+class DeathCertificatesModel(models.Model):
     FullName = models.CharField(max_length=100)
     Gender = models.CharField(max_length=20)
     PlaceOfDeath = models.CharField(max_length=100)
