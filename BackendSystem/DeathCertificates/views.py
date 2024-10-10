@@ -5,8 +5,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q,Count
 from rest_framework import status
+from django.http import JsonResponse
+from django.db.models.functions import TruncMonth
+from collections import defaultdict
 
 
 @api_view(['GET', 'POST'])
@@ -70,3 +73,25 @@ def DeathCertificate_Details(request,pk):
     elif request.method == 'DELETE':
         DeathCertificate.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@permission_classes([IsAuthenticated])
+def get_death_certificate_stat(request):
+    birth_start = (
+        DeathCertificatesModel.objects 
+            .annotate(month=TruncMonth('created_at'))
+            .values('month','Gender')
+            .annotate(count=Count('id'))
+            .order_by('month')
+
+    )
+
+    result = defaultdict(lambda:{'Male': 0,'Female': 0})
+
+    for stat in birth_start: 
+        month_str = stat['month'].strftime('%B')
+        gender=stat['Gender']
+        count=stat['count']
+
+        result[month_str][gender] = count
+    return JsonResponse(result)

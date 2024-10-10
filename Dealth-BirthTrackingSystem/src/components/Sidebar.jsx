@@ -318,7 +318,7 @@ const Logout = () => {
   
     </List>
 
-
+{/* 
     <List>
         
         <ListItem disablePadding sx={{ display: 'block' }}onClick={() => {navigate('/report')}}>
@@ -369,7 +369,7 @@ const Logout = () => {
           </ListItemButton>
         </ListItem>
   
-    </List>
+    </List> */}
 
       
         <Divider />
