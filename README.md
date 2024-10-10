@@ -1,23 +1,31 @@
-Birth and Death Certificate Management System
+#Birth and Death Certificate Management System
 
 
-Overview
+#Overview
 
 
 A system for managing and tracking printed and issued birth and death certificates, ensuring accurate record-keeping and easy tracking.
 
-Features
+#Features
+
+
 Register new birth/death certificates
 Track issued certificates
 Search/filter certificates
 Admin roles and access control
 
-Tech Stack
+#Tech Stack
+
+
 Backend: Django (Python)
 Database: MySql
 Frontend: (ReactJs + Vite)
 Authentication: JWT/Django Auth
-Installation
+
+
+#Installation
+
+
 Clone the repo:
 
 bash
@@ -41,7 +49,9 @@ Copy code
 python manage.py runserver
 
 
-License
+#License
+
+
 MIT License
 
 
