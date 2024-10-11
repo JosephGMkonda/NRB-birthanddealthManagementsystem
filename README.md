@@ -67,6 +67,12 @@ Copy code
 python manage.py runserver
 
 
+#**Credetials**
+
+username: joseph234
+
+password: mkonda23
+
 #**License**
 
 
